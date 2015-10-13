@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-    s, err := sensorserver.New("my_3.db")
+    s, err := sensorserver.New("my_4.db")
     if err != nil {
         log.Fatal(err)
     }
@@ -20,6 +20,8 @@ func main() {
 
     router.GET("/boltdb/stats", s.Stats)
     router.HEAD("/boltdb/stats", s.Stats)
+
+    router.PUT("/sensor/:name", s.PutSensorData)
 
 	router.Run(":8080")
 
