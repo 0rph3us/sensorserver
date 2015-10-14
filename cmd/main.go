@@ -21,8 +21,10 @@ func main() {
     router.GET("/boltdb/stats", s.Stats)
     router.HEAD("/boltdb/stats", s.Stats)
 
-    router.PUT("/sensor/:name", s.PutSensorData)
 	router.GET("/sensor", s.GetSensors)
+    router.PUT("/sensor/:name", s.PutSensorData)
+	router.GET("/sensor/:name", s.GetSensorData)
+
 
 	router.Run(":8080")
 
