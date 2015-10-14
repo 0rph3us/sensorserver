@@ -6,4 +6,5 @@ import (
 
 type Sensorserver struct {
 	boltdb *bolt.DB
+	conf   Config
 }

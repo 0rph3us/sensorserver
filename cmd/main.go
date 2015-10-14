@@ -4,11 +4,18 @@ import (
 	".."
 	"github.com/gin-gonic/gin"
 	"log"
+	"os"
 )
 
 func main() {
 
-	s, err := sensorserver.New("data.db")
+	// set configfile
+	configfile := os.Getenv("SENSOR_CONFIG")
+	if configfile == "" {
+		configfile = "config.toml"
+	}
+
+	s, err := sensorserver.New(configfile)
 	if err != nil {
 		log.Fatal(err)
 	}
