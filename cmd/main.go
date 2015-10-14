@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	s, err := sensorserver.New("my_4.db")
+	s, err := sensorserver.New("data.db")
 	if err != nil {
 		log.Fatal(err)
 	}
