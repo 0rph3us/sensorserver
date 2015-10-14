@@ -15,6 +15,8 @@ func main() {
 
 	router := gin.Default()
 
+	router.Static("/assets", "./assets")
+
 	router.GET("/boltdb/backup", s.Backup)
 	router.HEAD("/boltdb/backup", s.Backup)
 
