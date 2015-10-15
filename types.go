@@ -12,6 +12,8 @@ type putdata struct {
 type Config struct {
 	Database string `toml:"database"`
 	Title    string `toml:"title"`
+	Caption  string `toml:"caption"`
+	SubTitle string
 }
 
 type Sensorserver struct {

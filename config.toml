@@ -1,2 +1,3 @@
 database = "data.db"
 title = "Sensorserver"
+caption = "Sensordaten vom Raspberry Pi"
