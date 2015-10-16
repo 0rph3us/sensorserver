@@ -12,7 +12,7 @@ type ByTimestamp []highchartData
 
 func (a ByTimestamp) Len() int           { return len(a) }
 func (a ByTimestamp) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a ByTimestamp) Less(i, j int) bool { return a[i].T > a[j].T }
+func (a ByTimestamp) Less(i, j int) bool { return a[i].T < a[j].T }
 
 func (s *Sensorserver) GetSensorData(c *gin.Context) {
 
@@ -43,7 +43,7 @@ func (s *Sensorserver) GetSensorData(c *gin.Context) {
 	} else {
 		sort.Sort(ByTimestamp(data))
 
-		c.IndentedJSON(http.StatusOK, data[:400])
+		c.IndentedJSON(http.StatusOK, data[len(data)-400:])
 	}
 
 }
