@@ -9,6 +9,11 @@ type putdata struct {
 	Value     float32
 }
 
+type highchartData struct {
+	T int64
+	V float32
+}
+
 type Config struct {
 	Database string `toml:"database"`
 	Title    string `toml:"title"`
