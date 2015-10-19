@@ -19,6 +19,7 @@ type Config struct {
 	Title    string `toml:"title"`
 	Caption  string `toml:"caption"`
 	SubTitle string
+	Duration string
 }
 
 type Sensorserver struct {
