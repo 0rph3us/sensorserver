@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>{{ .Title }}</title>
+    <link rel="stylesheet" href="assets/css/pure-0.6.0-min.css">
+    <link rel="stylesheet" href="assets/css/side-menu.css">
+    <script src="assets/js/jquery.min-2.1.3.js"></script>
+    <script src="assets/js/highcharts.js"></script>
+</head>
+
+<body>
+    <div id="layout">
+        <!-- Menu toggle -->
+        <a href="#menu" id="menuLink" class="menu-link">
+            <span></span>
+        </a>
+
+        <div id="menu">
+            <div class="pure-menu">
+                <a class="pure-menu-heading" href="/">Sensor</a>
+
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><a href="?duration=3h" class="pure-menu-link">3 Stunden</a></li>
+                    <li class="pure-menu-item"><a href="?duration=24h" class="pure-menu-link">24 Stunden</a></li>
+                    <li class="pure-menu-item"><a href="?duration=1w" class="pure-menu-link">1 Woche</a></li>
+                    <li class="pure-menu-item"><a href="?duration=4w" class="pure-menu-link">1 Monat</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="main">
+            <div class="header">
+                <h1>{{ .Caption }}</h1>
+                <h2>{{ .SubTitle }}</h2>
+            </div>
+
+            <div id="content"></div>
+        </div>
+
+
+        <script src="/js/chart.js?duration={{ .Duration }}"></script>
+        <script src="assets/js/ui.js"></script>
+</body>
+</html>
