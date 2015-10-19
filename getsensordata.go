@@ -1,6 +1,7 @@
 package sensorserver
 
 import (
+	"bytes"
 	"errors"
 	"github.com/boltdb/bolt"
 	"github.com/gin-gonic/gin"
@@ -46,4 +47,35 @@ func (s *Sensorserver) GetSensorData(c *gin.Context) {
 		c.IndentedJSON(http.StatusOK, data[len(data)-400:])
 	}
 
+}
+
+func (s *Sensorserver) getSensorData(sensor string, duration int) (data []highchartData, err error) {
+
+	// return all Values, without parameter
+	err = s.boltdb.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte(sensor))
+		if b == nil {
+			msg := "Can't get Data for " + sensor
+			return errors.New(msg)
+		}
+
+		c := b.Cursor()
+
+		// fetch latest entry
+		max, _ := c.Last()
+
+		min := IntBytes(BytesToInt(max) - duration)
+
+		for k, v := c.Seek(min); k != nil && bytes.Compare(k, max) <= 0; k, v = c.Next() {
+			T := int64(BytesToInt(k) * 1000) // highcharts need a int32 as Timestamp
+			V := BytesToFloat32(v)
+			data = append(data, highchartData{T, V})
+		}
+
+		return nil
+	})
+	if err != nil {
+		return
+	}
+	return
 }

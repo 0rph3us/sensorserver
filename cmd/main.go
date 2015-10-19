@@ -36,6 +36,9 @@ func main() {
 	router.PUT("/sensor/:name", s.PutSensorData)
 	router.GET("/sensor/:name", s.GetSensorData)
 
+	router.GET("/js/chart.js", s.GetChart)
+	router.HEAD("/js/chart.js", s.GetChart)
+
 	router.Run(":8080")
 
 }
