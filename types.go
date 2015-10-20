@@ -4,7 +4,7 @@ import (
 	"github.com/boltdb/bolt"
 )
 
-type putdata struct {
+type singledata struct {
 	Timestamp int
 	Value     float32
 }

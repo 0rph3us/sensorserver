@@ -7,12 +7,12 @@ import (
 )
 
 func (s *Sensorserver) PutSensorData(c *gin.Context) {
-	var data []putdata
+	var data []singledata
 
 	sensor := []byte(c.Param("name"))
 
 	if c.BindJSON(&data) == nil {
-		// get array of putdata
+		// get array of singledata
 		err := s.boltdb.Batch(func(tx *bolt.Tx) error {
 
 			// create the bucket
