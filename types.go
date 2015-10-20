@@ -9,6 +9,11 @@ type singledata struct {
 	Value     float32
 }
 
+type multidata struct {
+	Timestamp int
+	Sensors   map[string]float32
+}
+
 type highchartData struct {
 	T int64
 	V float32

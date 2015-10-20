@@ -33,6 +33,7 @@ func main() {
 	router.HEAD("/boltdb/stats", s.Stats)
 
 	router.GET("/sensor", s.GetSensors)
+	router.PUT("/sensor", s.PutMultiSensorData)
 	router.PUT("/sensor/:name", s.PutSensorData)
 	router.GET("/sensor/:name", s.GetSensorData)
 
