@@ -80,7 +80,7 @@ var options = {
     },
     xAxis: {
         type: 'datetime',
-        plotBands: [],
+        plotBands: {{ .plotBands }},
         dateTimeLabelFormats: {
             hour: '%H:%M',
         }

@@ -2,10 +2,14 @@ package sensorserver
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"text/template"
 )
 
 func (s *Sensorserver) GetChart(c *gin.Context) {
+
+	// Load Template
+	//  Can't use c.HTML(), because the html template function escape "
+	t, _ := template.ParseFiles("templates/chart.js")
 
 	// configure sub title
 	duration := c.Query("duration")
@@ -39,12 +43,12 @@ func (s *Sensorserver) GetChart(c *gin.Context) {
 		}
 	}
 
-	f := make(map[string][]highchartData)
+	f := make(map[string]interface{})
 	f["dht22"], _ = s.getSensorData("tmp_dth22", durationInSeconds)
 	f["p_sea"], _ = s.getSensorData("p_sea", durationInSeconds)
 	f["humi"], _ = s.getSensorData("humidity", durationInSeconds)
+	f["plotBands"] = s.GetSunriseAndSunset()
 
 	c.Header("Content-Type", "application/javascript")
-	c.HTML(http.StatusOK, "chart.js", f)
-
+	t.Execute(c.Writer, f)
 }

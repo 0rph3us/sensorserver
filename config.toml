@@ -1,3 +1,5 @@
 database = "data.db"
 title = "Sensorserver"
 caption = "Sensordaten vom Raspberry Pi"
+latitude = 51.479
+longitude = 11.968

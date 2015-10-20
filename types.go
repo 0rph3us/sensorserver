@@ -19,12 +19,20 @@ type highchartData struct {
 	V float32
 }
 
+type plotBands struct {
+	From  int64  `json:"from"`
+	To    int64  `json:"to"`
+	Color string `json:"color"`
+}
+
 type Config struct {
-	Database string `toml:"database"`
-	Title    string `toml:"title"`
-	Caption  string `toml:"caption"`
-	SubTitle string
-	Duration string
+	Database  string  `toml:"database"`
+	Title     string  `toml:"title"`
+	Caption   string  `toml:"caption"`
+	Latitude  float64 `toml:"latitude"`
+	Longitude float64 `toml:"longitude"`
+	SubTitle  string
+	Duration  string
 }
 
 type Sensorserver struct {
