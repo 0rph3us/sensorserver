@@ -22,6 +22,12 @@ func main() {
 
 	router := gin.Default()
 
+	router.StaticFile("/favicon.ico", "./resources/favicon.ico")
+	router.StaticFile("/favicon-16x16.png", "./resources/favicon-16x16.png")
+	router.StaticFile("/favicon-32x32.png", "./resources/favicon-32x32.png")
+	router.StaticFile("/favicon-96x96.png", "./resources/favicon-96x96.png")
+	router.StaticFile("/android-icon-192x192.png", "./resources/android-icon-192x192.png")
+
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/assets", "./assets")
 	router.GET("/", s.Page)
