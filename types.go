@@ -31,6 +31,7 @@ type Config struct {
 	Caption   string  `toml:"caption"`
 	Latitude  float64 `toml:"latitude"`
 	Longitude float64 `toml:"longitude"`
+	MaxPoints int     `toml:"maxPoints"`
 	SubTitle  string
 	Duration  string
 }
