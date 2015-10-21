@@ -152,7 +152,7 @@ var options = {
         marker: {
             enabled: false
         },
-        data: [ {{ $temp := .humi }}
+        data: [ {{ $temp := .humidity }}
                 {{ range $n, $value := $temp }}[{{$value.T}}, {{$value.V}}], {{end}}
         ],
         tooltip: {
@@ -186,7 +186,7 @@ var options = {
         marker: {
             enabled: false
         },
-        data: [ {{ $temp := .dht22 }}
+        data: [ {{ $temp := .tmp_dth22 }}
             {{ range $n, $value := $temp }}[{{$value.T}}, {{$value.V}}], {{end}}
         ],
         tooltip: {
