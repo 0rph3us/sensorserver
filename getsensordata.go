@@ -32,7 +32,7 @@ func (s *Sensorserver) GetSensorData(c *gin.Context) {
 		c := b.Cursor()
 
 		for k, v := c.First(); k != nil; k, v = c.Next() {
-			T := int64(BytesToInt(k) * 1000) // highcharts need a int32 as Timestamp
+			T := int64(BytesToInt(k)) * int64(1000) // highcharts need a int64 as Timestamp
 			V := BytesToFloat32(v)
 			data = append(data, highchartData{T, V})
 		}
@@ -44,7 +44,7 @@ func (s *Sensorserver) GetSensorData(c *gin.Context) {
 	} else {
 		sort.Sort(ByTimestamp(data))
 
-		c.IndentedJSON(http.StatusOK, data[len(data)-400:])
+		c.IndentedJSON(http.StatusOK, s.reduceData(data))
 	}
 
 }
@@ -67,7 +67,7 @@ func (s *Sensorserver) getSensorData(sensor string, duration int) (data []highch
 		min := IntBytes(BytesToInt(max) - duration)
 
 		for k, v := c.Seek(min); k != nil && bytes.Compare(k, max) <= 0; k, v = c.Next() {
-			T := int64(BytesToInt(k) * 1000) // highcharts need a int32 as Timestamp
+			T := int64(BytesToInt(k)) * int64(1000) // highcharts need a int64 as Timestamp
 			V := BytesToFloat32(v)
 			data = append(data, highchartData{T, V})
 		}
