@@ -2,6 +2,8 @@ package sensorserver
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
 	"text/template"
 )
 
@@ -44,9 +46,17 @@ func (s *Sensorserver) GetChart(c *gin.Context) {
 	}
 
 	f := make(map[string]interface{})
-	f["dht22"], _ = s.getSensorData("tmp_dth22", durationInSeconds)
-	f["p_sea"], _ = s.getSensorData("p_sea", durationInSeconds)
-	f["humi"], _ = s.getSensorData("humidity", durationInSeconds)
+	sensors := []string{"tmp_dth22", "p_sea", "humidity"}
+	for _, sensor := range sensors {
+		data, err := s.getSensorData(sensor, durationInSeconds)
+		if err != nil {
+			log.Println(err.Error())
+			c.String(http.StatusInternalServerError, err.Error())
+			return
+		}
+		f[sensor] = s.reduceData(data)
+	}
+
 	f["plotBands"] = s.GetSunriseAndSunset()
 
 	c.Header("Content-Type", "application/javascript")
