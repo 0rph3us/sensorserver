@@ -1,9 +1,9 @@
 package sensorserver
 
 import (
-    "github.com/boltdb/bolt"
-    "errors"
-    "bytes"
+	"bytes"
+	"errors"
+	"github.com/boltdb/bolt"
 )
 
 // return all data from max(Timestamp) - duration for a specific sensor
