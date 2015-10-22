@@ -9,6 +9,13 @@ type singledata struct {
 	Value     float32
 }
 
+type minMaxData struct {
+	Timestamp int
+	MinValue  float32
+	MaxValue  float32
+	AvgValue  float32
+}
+
 type multidata struct {
 	Timestamp int
 	Sensors   map[string]float32
