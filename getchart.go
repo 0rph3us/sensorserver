@@ -18,7 +18,7 @@ func (s *Sensorserver) GetChart(c *gin.Context) {
 	f := make(map[string]interface{})
 	sensors := []string{"tmp_dth22", "p_sea", "humidity"}
 	for _, sensor := range sensors {
-		data, err := s.getSensorData(sensor, durationInSeconds)
+		data, err := s.fetchLastData(sensor, durationInSeconds)
 		if err != nil {
 			log.Println(err.Error())
 			c.String(http.StatusInternalServerError, err.Error())
