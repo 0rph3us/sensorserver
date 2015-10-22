@@ -13,37 +13,7 @@ func (s *Sensorserver) GetChart(c *gin.Context) {
 	//  Can't use c.HTML(), because the html template function escape "
 	t, _ := template.ParseFiles("templates/chart.js")
 
-	// configure sub title
-	duration := c.Query("duration")
-	var durationInSeconds int
-	s.conf.Duration = duration
-	switch duration {
-	case "3h":
-		{
-			s.conf.SubTitle = "der letzten 3 Stunden"
-			durationInSeconds = 3600 * 3
-		}
-	case "24h":
-		{
-			s.conf.SubTitle = "der letzten 24 Stunden"
-			durationInSeconds = 3600 * 24
-		}
-	case "1w":
-		{
-			s.conf.SubTitle = "der letzten Woche"
-			durationInSeconds = 3600 * 24 * 7
-		}
-	case "4w":
-		{
-			s.conf.SubTitle = "des letzten Monats"
-			durationInSeconds = 3600 * 24 * 7 * 4
-		}
-	default:
-		{
-			s.conf.SubTitle = "der letzten 24 Stunden"
-			durationInSeconds = 3600 * 24
-		}
-	}
+	durationInSeconds := s.duration(c.Query("duration"))
 
 	f := make(map[string]interface{})
 	sensors := []string{"tmp_dth22", "p_sea", "humidity"}
