@@ -1,36 +1,23 @@
 package sensorserver
 
 import (
-	"errors"
-	"github.com/boltdb/bolt"
 	"github.com/gin-gonic/gin"
+	"math"
 	"net/http"
 )
 
+// return data from a sensor in json format
+// This function call reduceData!
 func (s *Sensorserver) GetSensorData(c *gin.Context) {
-
-	var data []singleData
+	// maximum Timestamp is MaxInt32
+	// fetchLastData return all records, if duration is
+	// also MaxInt32
+	//  -> MaxInt32 - MaxInt32 = 0 -> get all data since 01.0.1.1970
+	const duration int = math.MaxInt32
 
 	sensor := c.Param("name")
+	data, err := s.fetchLastData(sensor, duration)
 
-	// return all Values, without parameter
-	err := s.boltdb.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte(sensor))
-		if b == nil {
-			msg := "Can't get Data for " + sensor
-			return errors.New(msg)
-		}
-
-		c := b.Cursor()
-
-		for k, v := c.First(); k != nil; k, v = c.Next() {
-			T := BytesToInt(k)
-			V := BytesToFloat32(v)
-			data = append(data, singleData{T, V})
-		}
-
-		return nil
-	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	} else {
