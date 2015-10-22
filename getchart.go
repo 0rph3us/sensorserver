@@ -29,6 +29,6 @@ func (s *Sensorserver) GetChart(c *gin.Context) {
 
 	f["plotBands"] = s.GetSunriseAndSunset()
 
-	c.Header("Content-Type", "application/javascript")
+	c.Header("Content-Type", "application/javascript; charset=utf-8")
 	t.Execute(c.Writer, f)
 }
