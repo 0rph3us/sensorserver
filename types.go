@@ -21,11 +21,6 @@ type multidata struct {
 	Sensors   map[string]float32
 }
 
-type highchartData struct {
-	T int64
-	V float32
-}
-
 type plotBands struct {
 	From  int64  `json:"from"`
 	To    int64  `json:"to"`

@@ -1,6 +1,6 @@
 package sensorserver
 
-func (s *Sensorserver) reduceData(data []highchartData) []highchartData {
+func (s *Sensorserver) reduceData(data []singleData) []singleData {
 
 	maxPoints := s.conf.MaxPoints
 
@@ -8,28 +8,28 @@ func (s *Sensorserver) reduceData(data []highchartData) []highchartData {
 		return data
 	}
 
-	min := data[0].T
-	max := data[len(data)-1].T
-	step := (max - min) / int64(maxPoints)
+	min := data[0].Timestamp
+	max := data[len(data)-1].Timestamp
+	step := (max - min) / maxPoints
 	step_h := step / 2
 	i := 0
 	numberOfValues := 0
 
-	newData := make([]highchartData, maxPoints+1)
-	v := highchartData{min + step_h, 0}
-	newData[0].T = min + step_h
+	newData := make([]singleData, maxPoints+1)
+	v := singleData{min + step_h, 0}
+	newData[0].Timestamp = min + step_h
 
 	for _, value := range data {
 
-		v.V += value.V
+		v.Value += value.Value
 		numberOfValues++
 
-		if value.T >= (newData[i].T + step_h) {
-			v.V /= float32(numberOfValues)
+		if value.Timestamp >= (newData[i].Timestamp + step_h) {
+			v.Value /= float32(numberOfValues)
 			newData[i] = v
-			v.T = newData[i].T + step
-			v.V = 0
-			newData[i+1].T = newData[i].T + step
+			v.Timestamp = newData[i].Timestamp + step
+			v.Value = 0
+			newData[i+1].Timestamp = newData[i].Timestamp + step
 			i++
 			numberOfValues = 0
 		}

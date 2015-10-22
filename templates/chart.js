@@ -146,7 +146,7 @@ var options = {
             enabled: false
         },
         data: [ {{ $temp := .humidity }}
-                {{ range $n, $value := $temp }}[{{$value.T}}, {{$value.V}}], {{end}}
+                {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.Value}}], {{end}}
         ],
         tooltip: {
             valueDecimals: 1,
@@ -160,7 +160,7 @@ var options = {
         yAxis: 2,
         color: Highcharts.getOptions().colors[2],
         data: [ {{ $temp := .p_sea }}
-                {{ range $n, $value := $temp }}[{{$value.T}}, {{$value.V}}], {{end}}
+                {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.Value}}], {{end}}
         ],
         marker: {
             enabled: false
@@ -180,7 +180,7 @@ var options = {
             enabled: false
         },
         data: [ {{ $temp := .tmp_dth22 }}
-            {{ range $n, $value := $temp }}[{{$value.T}}, {{$value.V}}], {{end}}
+            {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.Value}}], {{end}}
         ],
         tooltip: {
             valueDecimals: 1,
