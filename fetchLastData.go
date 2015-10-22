@@ -17,14 +17,20 @@ func (s *Sensorserver) fetchLastData(sensor string, duration int) (data []single
 			return errors.New(msg)
 		}
 
+		// get Cursor on the Bucket
 		c := b.Cursor()
 
 		// fetch latest entry
-		max, _ := c.Last()
+		maxByte, _ := c.Last()
 
-		min := IntBytes(BytesToInt(max) - duration)
+		// beginning must be positive
+		min := BytesToInt(maxByte) - duration
+		minBytes := IntBytes(min)
+		if min < 0 {
+			minBytes = IntBytes(0)
+		}
 
-		for k, v := c.Seek(min); k != nil && bytes.Compare(k, max) <= 0; k, v = c.Next() {
+		for k, v := c.Seek(minBytes); k != nil && bytes.Compare(k, maxByte) <= 0; k, v = c.Next() {
 			Timestamp := BytesToInt(k)
 			Value := BytesToFloat32(v)
 			data = append(data, singleData{Timestamp, Value})
