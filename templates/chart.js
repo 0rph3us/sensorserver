@@ -136,13 +136,6 @@ var options = {
         shared: true
     },
     legend: {
-        layout: 'vertical',
-        align: 'left',
-        x: 120,
-        verticalAlign: 'top',
-        y: 80,
-        floating: true,
-        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
     },
     series: [{
         name: 'Luftfeuchtigkeit',
