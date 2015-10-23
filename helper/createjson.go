@@ -3,9 +3,11 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os/user"
 )
 
 import _ "github.com/go-sql-driver/mysql"
@@ -33,13 +35,19 @@ func main() {
 	var insert_time int
 	var temp_bmp085, tmp_dth22, pressure, p_sea, humidity float32
 
-	user := "foo"
-	pass := "bar"
+	u, _ := user.Current()
+
+	user := flag.String("user", u.Username, "user for connect to database")
+	pass := flag.String("password", "", "password for the user")
 	prot := "tcp"
-	addr := "localhost:3306"
-	dbname := "sensoren"
-	netAddr := fmt.Sprintf("%s(%s)", prot, addr)
-	dsn := fmt.Sprintf("%s:%s@%s/%s?timeout=30s&strict=true&parseTime=true", user, pass, netAddr, dbname)
+	host := flag.String("host", "localhost", "hostname")
+	port := flag.Int("port", 3306, "MySQL port")
+	dbname := flag.String("database", "sensoren", "name of the database")
+
+	flag.Parse()
+
+	netAddr := fmt.Sprintf("%s(%s:%d)", prot, *host, *port)
+	dsn := fmt.Sprintf("%s:%s@%s/%s?timeout=30s&strict=true&parseTime=true", *user, *pass, netAddr, *dbname)
 
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
@@ -53,7 +61,6 @@ func main() {
 		log.Fatal(err)
 	}
 	defer stmt.Close()
-
 
 	rows, err := stmt.Query("2012-10-10 22:30:05")
 	if err != nil {
