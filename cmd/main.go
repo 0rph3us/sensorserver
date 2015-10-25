@@ -31,6 +31,7 @@ func main() {
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/assets", "./assets")
 	router.GET("/", s.Page)
+	router.HEAD("/", s.Page)
 
 	router.GET("/boltdb/backup", s.Backup)
 	router.HEAD("/boltdb/backup", s.Backup)
