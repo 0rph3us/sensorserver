@@ -28,6 +28,7 @@ type plotBands struct {
 }
 
 type Config struct {
+	Port      uint16   `toml:"port"`
 	Database  string   `toml:"database"`
 	Title     string   `toml:"title"`
 	Caption   string   `toml:"caption"`

@@ -2,6 +2,7 @@ package main
 
 import (
 	".."
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"os"
@@ -15,7 +16,7 @@ func main() {
 		configfile = "config.toml"
 	}
 
-	s, err := sensorserver.New(configfile)
+	s, port, err := sensorserver.New(configfile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -49,6 +50,7 @@ func main() {
 	router.GET("/js/chart.js", s.GetChart)
 	router.HEAD("/js/chart.js", s.GetChart)
 
-	router.Run(":8080")
+	connect := fmt.Sprintf(":%d", port)
+	router.Run(connect)
 
 }

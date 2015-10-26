@@ -1,4 +1,5 @@
 database = "data.db"
+port = 8080
 title = "Sensorserver"
 caption = "Sensordaten vom Raspberry Pi"
 latitude = 51.479
