@@ -30,6 +30,7 @@ func (s *Sensorserver) fetchLastData(sensor string, duration int) (data []single
 			minBytes = IntBytes(0)
 		}
 
+		// If the key c.Seek(minBytes) does not exist then the next key is used.
 		for k, v := c.Seek(minBytes); k != nil && bytes.Compare(k, maxByte) <= 0; k, v = c.Next() {
 			Timestamp := BytesToInt(k)
 			Value := BytesToFloat32(v)
