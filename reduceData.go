@@ -10,31 +10,38 @@ func (s *Sensorserver) reduceData(data []singleData) []singleData {
 
 	min := data[0].Timestamp
 	max := data[len(data)-1].Timestamp
-	step := (max - min) / maxPoints
-	step_h := step / 2
-	i := 0
+	stepInSeconds := (max - min) / maxPoints
+
 	numberOfValues := 0
 
-	newData := make([]singleData, maxPoints+1)
-	v := singleData{min + step_h, 0}
-	newData[0].Timestamp = min + step_h
+	reducedData := make([]singleData, maxPoints+1)
+	// for iteration on array reducedData
+	i := 0
 
-	for _, value := range data {
+	// init first Element in the Array
+	reducedData[0].Timestamp = min
+	reducedData[0].Value = 0.0
 
-		v.Value += value.Value
+	for _, element := range data {
+		// sum of all values
+		reducedData[i].Value += element.Value
+
 		numberOfValues++
 
-		if value.Timestamp >= (newData[i].Timestamp + step_h) {
-			v.Value /= float32(numberOfValues)
-			newData[i] = v
-			v.Timestamp = newData[i].Timestamp + step
-			v.Value = 0
-			newData[i+1].Timestamp = newData[i].Timestamp + step
+		// go to the next interval
+		if element.Timestamp > (reducedData[i].Timestamp + stepInSeconds) {
+			reducedData[i].Value /= float32(numberOfValues)
+
 			i++
+			// init next Element
+			reducedData[i].Timestamp = reducedData[i-1].Timestamp + stepInSeconds
+			reducedData[i].Value = 0.0
+
 			numberOfValues = 0
 		}
 	}
 
-	// remove the last Element
-	return newData[:len(newData)-1]
+	// return the first i elements
+	// i can be smaler than maxPoints, if large time gaps in the data array
+	return reducedData[:i]
 }
