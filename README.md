@@ -53,8 +53,7 @@ curl -XPUT 'http://127.0.0.1:8080/sensor' -d '[
 
 Support GET, HEAD and PUT requests for a specific sensor.
 GET returns a JSON array with timestamp-value objects. The
-timestamp is in milliseconds since 01.01.1970 (needed for
-javascript)
+timestamp is in seconds since 01.01.1970
 ``` sh
 curl -XGET 'http://127.0.0.1:8080/sensor/pressure'
 [
