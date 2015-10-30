@@ -15,8 +15,11 @@ func New(filename string) (s *Sensorserver, port uint16, err error) {
 		log.Fatal(err)
 		return
 	}
+
+	// return port
 	port = s.conf.Port
 
+	// open BoltDB
 	s.boltdb, err = bolt.Open(s.conf.Database, 0600, nil)
 	if err != nil {
 		log.Fatal(err)
