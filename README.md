@@ -15,7 +15,7 @@ for my Raspberry Pi.
 ### /boltdb/backup
 Support GET and HEAD requests. Get a binary stream of the database file.
 ``` sh
-curl 127.0.0.1:8080/boltdb/backup > backup$(date +%F).db
+curl -J -O http://127.0.0.1:8080/boltdb/backup
 ```
 
 ### /boltdb/stats
