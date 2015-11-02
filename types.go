@@ -38,6 +38,7 @@ type Config struct {
 	Sensors   []string `toml:"sensors"`
 	SubTitle  string
 	Duration  string
+	Type      string
 }
 
 type Sensorserver struct {

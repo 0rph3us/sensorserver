@@ -13,6 +13,8 @@ func (s *Sensorserver) GetChart(c *gin.Context) {
 	//  Can't use c.HTML(), because the html template function escape "
 	t, _ := template.ParseFiles("templates/chart.js")
 
+	s.conf.Type = c.Param("type")
+
 	durationInSeconds := s.duration(c.Query("duration"))
 
 	f := make(map[string]interface{})

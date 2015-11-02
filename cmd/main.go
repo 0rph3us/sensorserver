@@ -47,8 +47,8 @@ func main() {
 	router.GET("/sensor/:name", s.GetSensorData)
 	router.HEAD("/sensor/:name", s.GetSensorData)
 
-	router.GET("/js/chart.js", s.GetChart)
-	router.HEAD("/js/chart.js", s.GetChart)
+	router.GET("/js/:type/chart.js", s.GetChart)
+	router.HEAD("/js/:type/chart.js", s.GetChart)
 
 	connect := fmt.Sprintf(":%d", port)
 	router.Run(connect)

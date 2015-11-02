@@ -24,5 +24,8 @@ func New(filename string) (s *Sensorserver, port uint16, err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	s.conf.Type = "single"
+
 	return
 }
