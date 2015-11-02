@@ -24,6 +24,11 @@ func (s *Sensorserver) duration(duration string) (durationInSeconds int) {
 			s.conf.SubTitle = "des letzten Monats"
 			durationInSeconds = 3600 * 24 * 7 * 4
 		}
+	case "12w":
+		{
+			s.conf.SubTitle = "der letzten 3 Monate"
+			durationInSeconds = 3600 * 24 * 7 * 12
+		}
 	default:
 		{
 			s.conf.SubTitle = "der letzten 24 Stunden"
