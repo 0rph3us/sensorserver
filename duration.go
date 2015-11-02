@@ -28,6 +28,7 @@ func (s *Sensorserver) duration(duration string) (durationInSeconds int) {
 		{
 			s.conf.SubTitle = "der letzten 24 Stunden"
 			durationInSeconds = 3600 * 24
+			s.conf.Duration = "24h"
 		}
 	}
 	return
