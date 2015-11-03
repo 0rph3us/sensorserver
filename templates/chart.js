@@ -145,22 +145,67 @@ var options = {
         marker: {
             enabled: false
         },
-        data: [ {{ $temp := .humidity }}
+        data: [ {{ $temp := .humidity }} {{ if eq .type "single" }}
                 {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.Value}}], {{end}}
+                {{ else }}
+                {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.AvgValue}}], {{end}}
+                {{end}}
         ],
         tooltip: {
             valueDecimals: 1,
             valueSuffix: ' %'
         }
-
-    }, {
+    }, {{ if eq .type "min-max" }} {
+            name: 'Range',
+            data: [ {{ $temp := .humidity }}
+                    {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.MinValue}}, {{$value.MaxValue}}], {{end}}
+            ],
+            type: 'arearange',
+            yAxis: 0,
+            lineWidth: 0,
+            linkedTo: ':previous',
+            color: Highcharts.getOptions().colors[0],
+            fillOpacity: 0.3,
+            zIndex: 0
+    }, {{end}} {
+        name: 'Temperatur',
+        type: 'spline',
+        yAxis: 1,
+        color: Highcharts.getOptions().colors[1],
+        marker: {
+            enabled: false
+        },
+        data: [ {{ $temp := .tmp_dth22 }} {{ if eq .type "single" }}
+                {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.Value}}], {{end}} {{ else }}
+                {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.AvgValue}}], {{end}}
+                {{end}}
+        ],
+        tooltip: {
+            valueDecimals: 1,
+            valueSuffix: ' °C'
+        }
+    }, {{ if eq .type "min-max" }} {
+            name: 'Range',
+            data: [ {{ $temp := .tmp_dth22 }}
+                    {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.MinValue}}, {{$value.MaxValue}}], {{end}}
+            ],
+            type: 'arearange',
+            yAxis: 1,
+            lineWidth: 0,
+            linkedTo: ':previous',
+            color: Highcharts.getOptions().colors[1],
+            fillOpacity: 0.3,
+            zIndex: 0
+    }, {{end}} {
         name: 'Luftdruck auf Meereshöhe',
         type: 'spline',
         visible: false,
         yAxis: 2,
         color: Highcharts.getOptions().colors[2],
-        data: [ {{ $temp := .p_sea }}
-                {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.Value}}], {{end}}
+        data: [ {{ $temp := .p_sea }}  {{ if eq .type "single" }}
+                {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.Value}}], {{end}} {{ else }}
+                {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.AvgValue}}], {{end}}
+                {{end}}
         ],
         marker: {
             enabled: false
@@ -170,23 +215,19 @@ var options = {
             valueDecimals: 2,
             valueSuffix: ' hPa'
         }
-
-    }, {
-        name: 'Temperatur',
-        type: 'spline',
-        yAxis: 1,
-        color: Highcharts.getOptions().colors[1],
-        marker: {
-            enabled: false
-        },
-        data: [ {{ $temp := .tmp_dth22 }}
-            {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.Value}}], {{end}}
-        ],
-        tooltip: {
-            valueDecimals: 1,
-            valueSuffix: ' °C'
-        }
-    }]
+    }{{ if eq .type "min-max" }}, {
+            name: 'Range',
+            data: [ {{ $temp := .p_sea }}
+                    {{ range $n, $value := $temp }}[{{$value.Timestamp}}000, {{$value.MinValue}}, {{$value.MaxValue}}], {{end}}
+            ],
+            type: 'arearange',
+            yAxis: 2,
+            lineWidth: 0,
+            linkedTo: ':previous',
+            color: Highcharts.getOptions().colors[2],
+            fillOpacity: 0.3,
+            zIndex: 0
+    }{{end}}]
 };
 
 $(function() {
