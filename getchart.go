@@ -25,10 +25,16 @@ func (s *Sensorserver) GetChart(c *gin.Context) {
 			c.String(http.StatusInternalServerError, err.Error())
 			return
 		}
-		f[sensor] = s.reduceData(data)
+
+		if s.conf.Type == "single" {
+			f[sensor] = s.reduceData(data)
+		} else {
+			f[sensor] = s.getMinMaxPerDay(data)
+		}
 	}
 
 	f["plotBands"] = s.GetSunriseAndSunset()
+	f["type"] = s.conf.Type
 
 	c.Header("Content-Type", "application/javascript; charset=utf-8")
 	t.Execute(c.Writer, f)
