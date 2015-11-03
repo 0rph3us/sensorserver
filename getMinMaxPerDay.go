@@ -24,7 +24,7 @@ func (s *Sensorserver) getMinMaxPerDay(points []singleData) []minMaxData {
 	// number of days
 	days := (maxTimestamp - minTimestamp) / (halfDayInSeconds * 2)
 
-	minMaxData := make([]minMaxData, days+1)
+	minMaxData := make([]minMaxData, days+2)
 	// for iteration on array minMaxData
 	i := 0
 
@@ -68,5 +68,5 @@ func (s *Sensorserver) getMinMaxPerDay(points []singleData) []minMaxData {
 		}
 	}
 
-	return minMaxData
+	return minMaxData[:len(minMaxData)-2]
 }
