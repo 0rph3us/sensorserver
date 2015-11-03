@@ -18,20 +18,17 @@ func (s *Sensorserver) GetChart(c *gin.Context) {
 	durationInSeconds := s.duration(c.Query("duration"))
 
 	f := make(map[string]interface{})
-
-	if s.conf.Type == "single" {
-		for _, sensor := range s.conf.Sensors {
-			data, err := s.fetchLastData(sensor, durationInSeconds)
-			if err != nil {
-				log.Println(err.Error())
-				c.String(http.StatusInternalServerError, err.Error())
-				return
-			}
-			f[sensor] = s.reduceData(data)
+	for _, sensor := range s.conf.Sensors {
+		data, err := s.fetchLastData(sensor, durationInSeconds)
+		if err != nil {
+			log.Println(err.Error())
+			c.String(http.StatusInternalServerError, err.Error())
+			return
 		}
-
-		f["plotBands"] = s.GetSunriseAndSunset()
+		f[sensor] = s.reduceData(data)
 	}
+
+	f["plotBands"] = s.GetSunriseAndSunset()
 
 	c.Header("Content-Type", "application/javascript; charset=utf-8")
 	t.Execute(c.Writer, f)
