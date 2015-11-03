@@ -9,6 +9,10 @@ import (
 func (s *Sensorserver) GetSunriseAndSunset() string {
 	var data []plotBands
 
+	if s.conf.Duration == "12w" {
+		return "[]"
+	}
+
 	// A month has 744 hours
 	now := time.Now().AddDate(0, 0, 1)
 	date := time.Now().AddDate(0, -1, 0)
