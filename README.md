@@ -55,7 +55,7 @@ Support GET, HEAD and PUT requests for a specific sensor.
 GET returns a JSON array with timestamp-value objects. The
 timestamp is in seconds since 01.01.1970
 ``` sh
-curl -XGET 'http://127.0.0.1:8080/sensor/pressure'
+curl -XGET 'http://127.0.0.1:8080/sensor/pressure?pretty=true'
 [
     {
         "Timestamp": 1413011716487,
