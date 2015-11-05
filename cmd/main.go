@@ -13,9 +13,18 @@ func main() {
 	// set configfile
 	configfile := os.Getenv("SENSOR_CONFIG")
 	if configfile == "" {
-		configfile = "config.toml"
+		// exist /etc/sensorserver/config.toml?
+		if _, err := os.Stat("/etc/sensorserver/config.toml"); err == nil {
+			configfile = "/etc/sensorserver/config.toml"
+		}
+
+		// only for testing: exist config.toml in the actual directory?
+		if _, err := os.Stat("config.toml"); err == nil {
+			configfile = "config.toml"
+		}
 	}
 
+	log.Println("Read configuration form", configfile)
 	s, port, err := sensorserver.New(configfile)
 	if err != nil {
 		log.Fatal(err)
