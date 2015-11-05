@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func New(filename string) (s *Sensorserver, port uint16, err error) {
+func New(filename, datadir string) (s *Sensorserver, port uint16, err error) {
 	s = &Sensorserver{}
 
 	// Read config
@@ -20,7 +20,8 @@ func New(filename string) (s *Sensorserver, port uint16, err error) {
 	port = s.conf.Port
 
 	// open BoltDB
-	s.boltdb, err = bolt.Open(s.conf.Database, 0600, nil)
+	databasefile := datadir + s.conf.Database
+	s.boltdb, err = bolt.Open(databasefile, 0600, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

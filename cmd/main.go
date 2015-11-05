@@ -24,8 +24,14 @@ func main() {
 		}
 	}
 
+	// set data dir
+	datadir := os.Getenv("SENSORSERVER_DATA")
+	if datadir != "" {
+		datadir += "/"
+	}
+
 	log.Println("Read configuration form", configfile)
-	s, port, err := sensorserver.New(configfile)
+	s, port, err := sensorserver.New(configfile, datadir)
 	if err != nil {
 		log.Fatal(err)
 	}
