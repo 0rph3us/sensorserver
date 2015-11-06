@@ -11,7 +11,7 @@ func (s *Sensorserver) GetChart(c *gin.Context) {
 
 	// Load Template
 	//  Can't use c.HTML(), because the html template function escape "
-	t, _ := template.ParseFiles("templates/chart.js")
+	t, _ := template.ParseFiles(s.conf.TemplateDir + "/chart.js")
 
 	s.conf.Type = c.Param("type")
 

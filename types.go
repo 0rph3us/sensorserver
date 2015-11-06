@@ -28,17 +28,18 @@ type plotBands struct {
 }
 
 type Config struct {
-	Port      uint16   `toml:"port"`
-	Database  string   `toml:"database"`
-	Title     string   `toml:"title"`
-	Caption   string   `toml:"caption"`
-	Latitude  float64  `toml:"latitude"`
-	Longitude float64  `toml:"longitude"`
-	MaxPoints int      `toml:"maxPoints"`
-	Sensors   []string `toml:"sensors"`
-	SubTitle  string
-	Duration  string
-	Type      string
+	Port        uint16   `toml:"port"`
+	Database    string   `toml:"database"`
+	Title       string   `toml:"title"`
+	Caption     string   `toml:"caption"`
+	Latitude    float64  `toml:"latitude"`
+	Longitude   float64  `toml:"longitude"`
+	MaxPoints   int      `toml:"maxPoints"`
+	Sensors     []string `toml:"sensors"`
+	SubTitle    string
+	Duration    string
+	Type        string
+	TemplateDir string
 }
 
 type Sensorserver struct {

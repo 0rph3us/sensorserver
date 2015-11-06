@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func New(filename, datadir string) (s *Sensorserver, port uint16, err error) {
+func New(filename, datadir, templatedir string) (s *Sensorserver, port uint16, err error) {
 	s = &Sensorserver{}
 
 	// Read config
@@ -27,6 +27,7 @@ func New(filename, datadir string) (s *Sensorserver, port uint16, err error) {
 	}
 
 	s.conf.Type = "single"
+	s.conf.TemplateDir = templatedir
 
 	return
 }

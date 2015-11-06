@@ -30,8 +30,14 @@ func main() {
 		datadir += "/"
 	}
 
+	// get template dir
+	templatedir := "/etc/sensorserver/templates"
+	if _, err := os.Stat(templatedir); err != nil {
+		templatedir = "templates"
+	}
+
 	log.Println("Read configuration form", configfile)
-	s, port, err := sensorserver.New(configfile, datadir)
+	s, port, err := sensorserver.New(configfile, datadir, templatedir)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -44,7 +50,7 @@ func main() {
 	router.StaticFile("/favicon-96x96.png", datadir+"resources/favicon-96x96.png")
 	router.StaticFile("/android-icon-192x192.png", datadir+"resources/android-icon-192x192.png")
 
-	router.LoadHTMLGlob("templates/*")
+	router.LoadHTMLGlob(templatedir + "/*")
 	router.Static("/assets", datadir+"assets")
 	router.GET("/", s.Page)
 	router.HEAD("/", s.Page)
