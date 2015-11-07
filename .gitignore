@@ -25,3 +25,14 @@ _testmain.go
 
 data.db
 dumps/
+
+assets/js/jquery.min.js
+assets/js/highcharts.js
+assets/js/highcharts-more.js
+
+# for buildung
+*.deb
+package/usr/sbin/sensorserver
+package/etc/sensorserver/config.toml
+package/etc/sensorserver/
+package/var/lib/
