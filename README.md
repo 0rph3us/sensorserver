@@ -4,6 +4,18 @@ Sensorserver is simple all-in-one solution for store and
 serve timeseries from sensors. I develop this application
 for my Raspberry Pi.
 
+## Build
+
+``` sh
+./prepare.sh
+go get -u github.com/0rph3us/astrotime
+go get -u github.com/BurntSushi/toml
+go get -u github.com/gin-gonic/gin
+go get -u github.com/boltdb/bolt
+
+go run cmd/main.go
+```
+
 ## Dependencies
 * [Gin] the web framework
 * [toml] is the format for the configuration file
