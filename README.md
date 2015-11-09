@@ -123,7 +123,22 @@ curl -XPUT 'http://127.0.0.1:8080/sensor/humidity' -d '[
 ]'
 ```
 
+## Alternative
+
+* [influxDB]
+* [prometheus]
+* [graphite]
+
+All alternatives looks good. Graphite has the most functions, but the project looks
+dead. [Grafana] is a very good frontend for the 3 backends. [This plugin] is required
+for the prometheus datasource.
+
 [Gin]: https://github.com/gin-gonic/gin/
 [toml]: https://github.com/BurntSushi/toml/
 [BoltDB]: https://github.com/boltdb/bolt/
+[Grafana]: http://grafana.org/
+[influxDB]: https://influxdb.com/
+[graphite]: http://graphite.wikidot.com/
 [Astrotime]: https://github.com/0rph3us/astrotime/
+[prometheus]: http://prometheus.io/
+[This plugin]: https://github.com/grafana/grafana-plugins/tree/master/datasources/prometheus
