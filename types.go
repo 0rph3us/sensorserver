@@ -46,3 +46,5 @@ type Sensorserver struct {
 	boltdb *bolt.DB
 	conf   Config
 }
+
+type MinFloat32Heap []float32
