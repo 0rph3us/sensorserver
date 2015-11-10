@@ -19,3 +19,13 @@ func (h *MinFloat32Heap) Pop() interface{} {
 	*h = old[0 : n-1]
 	return x
 }
+
+func (h *MinFloat32Heap) Average() float32 {
+
+	sum := float32(0.0)
+	for i := 0; i < len(*h); i++ {
+		sum += (*h)[i]
+	}
+
+	return sum / float32(i+1)
+}
