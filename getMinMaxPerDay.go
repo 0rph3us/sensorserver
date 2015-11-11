@@ -1,7 +1,7 @@
 package sensorserver
 
 import (
-	"math"
+	"container/heap"
 	"time"
 )
 
@@ -30,41 +30,43 @@ func (s *Sensorserver) getMinMaxPerDay(points []singleData) []minMaxData {
 
 	// init first Element in the Array
 	minMaxData[0].Timestamp = minTimestamp
-	minMaxData[0].MinValue = math.MaxFloat32
-	minMaxData[0].MaxValue = -math.MaxFloat32
 	minMaxData[0].AvgValue = 0.0
 
-	numberOfValues := 0
+	// init empty Heap
+	min := &MinFloat32Heap{}
+	heap.Init(min)
 
 	for _, point := range points {
-		// find minimum value
-		if minMaxData[i].MinValue > point.Value {
-			minMaxData[i].MinValue = point.Value
-		}
 
-		// find maximum value
-		if minMaxData[i].MaxValue < point.Value {
-			minMaxData[i].MaxValue = point.Value
-		}
+		// use Heap for Minimum and Maximum
+		heap.Push(min, point.Value)
 
 		// sum of all values
 		minMaxData[i].AvgValue += point.Value
 
-		numberOfValues++
-
 		// go to the next day
 		if point.Timestamp > (minMaxData[i].Timestamp + halfDayInSeconds) {
 
+			p99 := int(float32(min.Len()) * 0.99)
+			min_p99 := min.Len() - p99
+			if min.Len() > 1 {
+				minMaxData[i].MinValue = (*min)[p99]
+				minMaxData[i].MaxValue = (*min)[min_p99]
+			} else {
+				minMaxData[i].MinValue = (*min)[0]
+				minMaxData[i].MaxValue = (*min)[0]
+			}
+
+			numberOfValues := min.Len() + 1
 			minMaxData[i].AvgValue /= float32(numberOfValues)
+
+			min = &MinFloat32Heap{}
+			heap.Init(min)
 
 			i++
 			// init next Element
 			minMaxData[i].Timestamp = minMaxData[i-1].Timestamp + (2 * halfDayInSeconds)
-			minMaxData[i].MinValue = math.MaxFloat32
-			minMaxData[i].MaxValue = -math.MaxFloat32
 			minMaxData[i].AvgValue = 0.0
-
-			numberOfValues = 0
 		}
 	}
 
