@@ -2,13 +2,31 @@ package main
 
 import (
 	".."
+	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"os"
+	"strings"
 )
 
+var Version = "No Version Provided"
+var Commit = "No Hash Provided"
+var BuildTime = "No build time Provided"
+
 func main() {
+
+	version := flag.Bool("v", false, "prints current version")
+	flag.Parse()
+
+	if *version {
+		fmt.Println("Version:   ", Version)
+		fmt.Println("Git commit:", Commit)
+		BuildTime = strings.Replace(BuildTime, "_", " ", -1)
+		fmt.Println("Build:     ", BuildTime)
+
+		os.Exit(0)
+	}
 
 	// set configfile
 	configfile := os.Getenv("SENSOR_CONFIG")
