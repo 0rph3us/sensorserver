@@ -23,7 +23,8 @@ func (h *MinFloat32Heap) Pop() interface{} {
 func (h *MinFloat32Heap) Average() float32 {
 
 	sum := float32(0.0)
-	for i := 0; i < len(*h); i++ {
+	var i int
+	for i = 0; i < len(*h); i++ {
 		sum += (*h)[i]
 	}
 
