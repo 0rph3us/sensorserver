@@ -48,7 +48,7 @@ fpm -s dir -t deb -n $name \
   --category misc \
   --url "$url" \
   --license "GNU GENERAL PUBLIC LICENSE Version 2, June 1991" \
-  --architecture armv7l \
+  --architecture armhf \
   --after-install package/postinstall \
   -d adduser \
   etc lib usr var
