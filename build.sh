@@ -9,6 +9,11 @@ if [ $(git status | grep -c clean) -eq 0 ]; then
     exit 1
 fi
 
+if [ ! $(which fpm) ]; then
+    echo "fmp is required"
+    exit 1
+fi
+
 # git-buildpackages
 
 maintainer='Michael Rennecke <michael.rennecke@gmail.com>'
