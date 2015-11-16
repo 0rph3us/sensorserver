@@ -2,6 +2,13 @@
 
 set -e
 
+# working directory must clean
+if [ $(git status | grep -c clean) -eq 0 ]; then
+    git status
+    echo "commit all changes"
+    exit 1
+fi
+
 # git-buildpackages
 
 maintainer='Michael Rennecke <michael.rennecke@gmail.com>'
