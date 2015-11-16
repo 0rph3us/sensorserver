@@ -1,0 +1,19 @@
+[Unit]
+Description=Starts and stops the sensorserver on this system
+Documentation=https://github.com/0rph3us/sensorserver/blob/master/README.md
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+EnvironmentFile=/etc/default/sensorserver
+Type=simple
+User=sensorserver
+Group=sensorserver
+ExecStart=/usr/sbin/sensorserver
+
+LimitNOFILE=10000
+TimeoutStopSec=20
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

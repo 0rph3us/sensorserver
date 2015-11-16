@@ -1,0 +1,4 @@
+RESTART_ON_UPGRADE=true
+SENSORSERVER_GROUP=sensorserver
+SENSORSERVER_USER=sensorserver
+SENSORSERVER_DATA=/var/lib/sensorserver

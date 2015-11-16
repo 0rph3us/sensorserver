@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -e
+
+[ -f /etc/default/sensorserver ] && . /etc/default/sensorserver
+
+startSensorserver() {
+    /bin/systemctl daemon-reload
+    /bin/systemctl start sensorserver
+}
+
+case "$1" in
+	configure)
+	if ! getent group "$SENSORSERVER_GROUP" > /dev/null 2>&1 ; then
+	    addgroup --system "$SENSORSERVER_GROUP" --quiet
+	fi
+	if ! id $SENSORSERVER_USER > /dev/null 2>&1 ; then
+	    adduser --system --no-create-home \
+		--ingroup "$SENSORSERVER_GROUP" --disabled-password --shell /bin/false \
+		"$SENSORSERVER_USER"
+	fi
+
+	# Set user permissions on /var/log/sensorserver, SENSORSERVER_DATA (default: /var/lib/sensorserver)
+	mkdir -p /var/log/sensorserver $SENSORSERVER_DATA
+	chown -R $SENSORSERVER_USER:$SENSORSERVER_GROUP /var/log/sensorserver $SENSORSERVER_DATA
+	chmod 755 /var/log/sensorserver $SENSORSERVER_DATA
+
+	# configuration files should not be modifiable by sensorserver user, as this can be a security issue
+	chown -Rh root:$SENSORSERVER_GROUP /etc/sensorserver/*
+	chmod 755 /etc/sensorserver
+	find /etc/sensorserver -type f -exec chmod 644 {} ';'
+	find /etc/sensorserver -type d -exec chmod 755 {} ';'
+
+	# if $2 is set, this is an upgrade
+	if ( [ -n $2 ] && [ "$RESTART_ON_UPGRADE" = "true" ] ) ; then
+		startSensorserver
+	# this is a fresh installation
+	elif [ -z $2 ] ; then
+        echo "### NOT starting on installation, please execute the following statements to configure sensorserver to start automatically using systemd"
+        echo " /bin/systemctl daemon-reload"
+        echo " /bin/systemctl enable sensorserver-server"
+        echo "### You can start sensorserver-server by executing"
+        echo " /bin/systemctl start sensorserver-server"
+	fi
+	;;
+esac
