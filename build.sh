@@ -20,7 +20,9 @@ maintainer='Michael Rennecke <michael.rennecke@gmail.com>'
 vendor="$maintainer"
 url="https://github.com/0rph3us/sensorserver"
 name=sensorserver
-version="0.0.1"
+version="0.1.0"
+
+git tag $version
 
 # build ARMv7 package
 env GOOS=linux GOARCH=arm GOARM=7 go build -ldflags "-X main.Version=$version -X main.BuildTime=$(date -u '+%Y-%m-%d_%H:%M:%S_UTC') -X main.Commit=$(git rev-parse HEAD)" cmd/main.go
