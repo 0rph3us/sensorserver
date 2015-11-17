@@ -16,6 +16,15 @@ go get -u github.com/boltdb/bolt
 go run cmd/main.go
 ```
 
+
+### build package
+
+You need [fpm] for building the package.
+
+``` sh
+./build.sh
+```
+
 ## Dependencies
 * [Gin] the web framework
 * [toml] is the format for the configuration file
@@ -134,6 +143,7 @@ dead. [Grafana] is a very good frontend for the 3 backends. [This plugin] is req
 for the prometheus datasource.
 
 [Gin]: https://github.com/gin-gonic/gin/
+[fpm]: https://github.com/jordansissel/fpm
 [toml]: https://github.com/BurntSushi/toml/
 [BoltDB]: https://github.com/boltdb/bolt/
 [Grafana]: http://grafana.org/
