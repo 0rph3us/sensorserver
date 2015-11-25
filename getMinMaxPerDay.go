@@ -48,10 +48,10 @@ func (s *Sensorserver) getMinMaxPerDay(points []singleData) []minMaxData {
 		if point.Timestamp > (minMaxData[i].Timestamp + halfDayInSeconds) {
 
 			p99 := int(float32(min.Len()) * 0.99)
-			min_p99 := min.Len() - p99
+			minP99 := min.Len() - p99
 			if min.Len() > 1 {
 				minMaxData[i].MinValue = (*min)[p99]
-				minMaxData[i].MaxValue = (*min)[min_p99]
+				minMaxData[i].MaxValue = (*min)[minP99]
 			} else {
 				minMaxData[i].MinValue = (*min)[0]
 				minMaxData[i].MaxValue = (*min)[0]

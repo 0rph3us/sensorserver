@@ -6,6 +6,7 @@ import (
 	"log"
 )
 
+// BytesToInt convert a byte Array to a int
 func BytesToInt(b []byte) int {
 	var i int32
 	buf := bytes.NewReader(b)
